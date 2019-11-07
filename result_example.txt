@@ -1,4 +1,4 @@
-IPHONE 11,50,30,20
+IPHONE 11,50,30,20t
 alias11 50
 alias12 40
 alias10 20
