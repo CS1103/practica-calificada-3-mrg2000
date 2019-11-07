@@ -38,6 +38,7 @@ void Read(fstream &archivo, vector<Subasta>& subastas){
             Propuesta prop(alias,stof(monto));
             subastas[num_sub-1].propuestas.push_back(prop);
 
+            producto_name.clear();
             alias.clear();
             monto.clear();
             count_alias = 0;
@@ -68,6 +69,17 @@ float CalcProm(vector<Propuesta> propuestas){
     return suma/(propuestas.size());
 }
 
+float CalcMenor(vector<Propuesta> propuestas){
+    float min = propuestas[0].monto;
+
+    for (size_t i=1;i<propuestas.size();i++){
+        if(propuestas[i].monto < min)
+            min = propuestas[i].monto;
+    }
+
+    return min;
+}
+
 
 
 void Print(ostream& os, vector<Subasta> subastas){
@@ -75,6 +87,7 @@ void Print(ostream& os, vector<Subasta> subastas){
         os << subastas[i].nombre_producto << ",";
         os << CalcMayor(subastas[i].propuestas) << ",";
         os << CalcProm(subastas[i].propuestas) << ",";
+        os << CalcMenor(subastas[i].propuestas);
         os << endl;
     }
 
