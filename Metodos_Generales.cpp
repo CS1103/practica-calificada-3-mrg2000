@@ -50,9 +50,10 @@ void Read(fstream &archivo, vector<Subasta>& subastas){
 float CalcMayor(vector<Propuesta> propuestas){
     float max = 0;
 
-    for (size_t i=0;i<propuestas.size();i++){
-        if(propuestas[i].monto > max)
-            max = propuestas[i].monto;
+    for(auto it= begin(propuestas);it != end(propuestas);it++){
+        if((*it).monto > max)
+            max = (*it).monto;
+
     }
 
     return max;
@@ -72,9 +73,10 @@ float CalcProm(vector<Propuesta> propuestas){
 float CalcMenor(vector<Propuesta> propuestas){
     float min = propuestas[0].monto;
 
-    for (size_t i=1;i<propuestas.size();i++){
-        if(propuestas[i].monto < min)
-            min = propuestas[i].monto;
+    for(auto it= begin(propuestas);it != end(propuestas);it++){
+        if((*it).monto < min)
+            min = (*it).monto;
+
     }
 
     return min;
@@ -90,7 +92,6 @@ void Print(ostream& os, vector<Subasta> subastas){
         os << CalcMenor(subastas[i].propuestas);
         os << endl;
     }
-
 }
 
 
