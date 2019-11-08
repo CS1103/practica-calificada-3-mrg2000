@@ -4,8 +4,23 @@
 
 #include "Estructuras.h"
 #include <string>
+#include <algorithm>
 
 using namespace std;
+
+bool ValidarUser(vector <Propuesta> prop,Propuesta propind){
+
+    for(size_t i=0;i<prop.size();i++){
+        if(prop[i].alias == propind.alias){
+            if(prop[i].monto > propind.monto)
+                return false;
+        }
+    }
+
+
+    return true;
+}
+
 
 void Read(fstream &archivo, vector<Subasta>& subastas){
     int num_sub = 0;
@@ -35,8 +50,12 @@ void Read(fstream &archivo, vector<Subasta>& subastas){
             }
             copy_n(linea.begin(), count_alias, back_inserter(alias));
             copy_n(linea.begin()+(count_alias+1), 2, back_inserter(monto));
+
             Propuesta prop(alias,stof(monto));
-            subastas[num_sub-1].propuestas.push_back(prop);
+
+            if(ValidarUser(subastas[num_sub-1].propuestas,prop))
+                subastas[num_sub-1].propuestas.push_back(prop);
+
 
             producto_name.clear();
             alias.clear();
@@ -78,9 +97,15 @@ float CalcMenor(vector<Propuesta> propuestas){
             min = (*it).monto;
 
     }
-
     return min;
 }
+
+
+void SortPropuestas(vector<Propuesta>& propuestas){
+    sort(propuestas.begin(),propuestas.end());
+}
+
+
 
 
 
@@ -91,6 +116,12 @@ void Print(ostream& os, vector<Subasta> subastas){
         os << CalcProm(subastas[i].propuestas) << ",";
         os << CalcMenor(subastas[i].propuestas);
         os << endl;
+
+        vector <Propuesta> prop = subastas[i].propuestas;
+        SortPropuestas(prop);
+        for(auto it=begin(prop); it != end(prop); it++){
+            os << (*it).alias << " " << (*it).monto << endl;
+        }
     }
 }
 

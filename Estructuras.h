@@ -22,6 +22,9 @@ struct Propuesta{
 
 };
 
+bool operator<(const Propuesta &s1, const Propuesta &s2);
+
+
 struct Subasta{
 public:
     string nombre_producto;
@@ -34,6 +37,7 @@ void Read(fstream &archivo, vector<Subasta>& subastas);
 float CalcMayor(vector<Propuesta> propuestas);
 float CalcProm(vector<Propuesta> propuestas);
 void Print(ostream& os, vector<Subasta> subastas);
+void SortPropuestas(vector<Propuesta>& propuestas);
 
 
 
